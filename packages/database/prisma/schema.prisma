@@ -1,0 +1,111 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Infrastructure {
+  id        String   @id @default(uuid())
+  name      String
+  type      String
+  provider  String
+  region    String
+  status    String   @default("pending")
+  config    Json     @default("{}")
+  tags      Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  metrics   Metric[]
+  incidents Incident[]
+
+  @@map("infrastructures")
+}
+
+model Metric {
+  id               String         @id @default(uuid())
+  infrastructureId String
+  type             String
+  name             String
+  value            Float
+  unit             String
+  tags             Json?
+  timestamp        DateTime       @default(now())
+  
+  infrastructure   Infrastructure @relation(fields: [infrastructureId], references: [id], onDelete: Cascade)
+
+  @@index([infrastructureId, timestamp])
+  @@index([type, timestamp])
+  @@map("metrics")
+}
+
+model Incident {
+  id               String         @id @default(uuid())
+  title            String
+  description      String
+  severity         String
+  status           String         @default("open")
+  infrastructureId String
+  detectedBy       String
+  resolvedBy       String?
+  context          Json?
+  resolution       String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  resolvedAt       DateTime?
+  
+  infrastructure   Infrastructure @relation(fields: [infrastructureId], references: [id], onDelete: Cascade)
+
+  @@index([infrastructureId, status])
+  @@index([severity, status])
+  @@map("incidents")
+}
+
+model Workflow {
+  id          String   @id @default(uuid())
+  name        String
+  type        String
+  description String?
+  schedule    String?
+  config      Json
+  enabled     Boolean  @default(true)
+  lastRun     DateTime?
+  nextRun     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  executions  WorkflowExecution[]
+
+  @@map("workflows")
+}
+
+model WorkflowExecution {
+  id          String    @id @default(uuid())
+  workflowId  String
+  status      String
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  error       String?
+  output      Json?
+
+  workflow    Workflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId, status])
+  @@map("workflow_executions")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
