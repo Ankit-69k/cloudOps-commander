@@ -1,5 +1,5 @@
 {
-  "name": "cloudOps-commander",
+  "name": "cloudops-commander",
   "private": true,
   "scripts": {
     "build": "turbo run build",
