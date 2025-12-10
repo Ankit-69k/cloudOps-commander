@@ -17,8 +17,8 @@ export const CreateInfrastructureSchema = z.object({
   type: InfrastructureTypeSchema,
   provider: CloudProviderSchema,
   region: z.string().min(1),
-  config: z.record(z.string(), z.unknown()).optional(),
-  tags: z.record(z.string(), z.unknown()).optional(),
+  config: z.record(z.string(), z.unknown()).default({}),
+  tags: z.record(z.string(), z.string()).optional(),
 });
 
 export type CreateInfrastructureInput = z.infer<typeof CreateInfrastructureSchema>;
