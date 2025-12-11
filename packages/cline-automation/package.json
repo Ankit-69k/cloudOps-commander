@@ -1,5 +1,5 @@
 {
-  "name": "@cloudops-commander/types",
+  "name": "@cloudops-commander/cline-automation",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -13,9 +13,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "@types/node": "^25.0.0",
+    "typescript": "^5.9.3",
+    "@cloudops-commander/types": "workspace:*",
+    "@cloudops-commander/logger": "workspace:*"
   },
   "dependencies": {
+    "execa": "^9.6.1",
+    "yaml": "^2.8.2",
     "zod": "^4.1.13"
   }
 }
