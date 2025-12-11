@@ -14,13 +14,13 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^25.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "@cloudops-commander/types": "workspace:*"
   },
   "dependencies": {
     "execa": "^9.6.1",
     "yaml": "^2.8.2",
     "zod": "^4.1.13",
-    "@cloudops-commander/types": "workspace:*",
     "@cloudops-commander/logger": "workspace:*"
   }
 }

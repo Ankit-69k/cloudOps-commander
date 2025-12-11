@@ -7,10 +7,10 @@ export class AIAgent {
 
   constructor(config: Partial<AIAgentConfig> = {}) {
     this.config = {
-      model: config.model || 'gpt-4',
-      temperature: config.temperature || 0.7,
-      maxTokens: config.maxTokens || 1000,
-      systemPrompt: config.systemPrompt || 'You are an AI infrastructure operations agent.',
+      model: config.model ?? 'gpt-4',
+      temperature: config.temperature ?? 0.7,
+      maxTokens: config.maxTokens ?? 1000,
+      systemPrompt: config.systemPrompt ?? 'You are an AI infrastructure operations agent.',
     };
   }
 
