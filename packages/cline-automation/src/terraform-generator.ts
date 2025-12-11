@@ -88,7 +88,10 @@ export class TerraformGenerator {
 
   // Format HCL value
   private formatHclValue(value: unknown): string {
-    if (typeof value === 'string') return `"${value}"`;
+    if (typeof value === 'string') {
+      const escaped = value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+      return `"${escaped}"`;
+    }
     if (typeof value === 'boolean' || typeof value === 'number') return String(value);
     return JSON.stringify(value);
   }
@@ -163,7 +166,6 @@ ${Object.entries(resource.config)
     instanceClass: string;
     region: string;
     username: string;
-    password: string;
     skipFinalSnapshot?: boolean;
   }): Promise<string> {
     const terraformConfig: TerraformConfig = {
@@ -178,7 +180,6 @@ ${Object.entries(resource.config)
             instance_class: config.instanceClass,
             allocated_storage: 20,
             username: config.username,
-            password: config.password,
             skip_final_snapshot: config.skipFinalSnapshot ?? true,
           },
         },
