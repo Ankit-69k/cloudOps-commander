@@ -1,16 +1,10 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import app from './server/server';
 
-import express from 'express';
+export default app;
 
-const app = express();
-
-app.get('/', (req, res) => {
-  res.json({
-    message: 'hello world',
+if (process.env.NODE_ENV !== 'production') {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
   });
-});
-
-app.listen(4000, () => {
-  console.log('Server running on port 4000');
-});
+}
