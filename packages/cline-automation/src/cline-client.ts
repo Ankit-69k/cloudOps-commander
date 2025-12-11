@@ -11,7 +11,20 @@ export class ClineClient {
     this.defaultTimeout = defaultTimeout;
   }
 
-  // Execute a Cline automation task
+  /**
+   * Execute a Cline automation task
+   * @param task - The task configuration
+   * @returns Promise resolving to task execution result
+   * @throws Never throws - errors are captured in ClineResponse.error
+   *
+   * @remarks
+   * Requires Cline CLI to be available at cliPath with the interface:
+   *   cline execute --prompt <prompt_string>
+   *
+   * The CLI is expected to output files in the format:
+   *   // FILE: <path>
+   *   <content>
+   */
   async executeTask(task: ClineTask): Promise<ClineResponse> {
     const startTime = Date.now();
 

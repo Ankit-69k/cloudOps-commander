@@ -86,37 +86,44 @@ export class TerraformGenerator {
             Include proper variables, outputs, and best practices for production use.`;
   }
 
+  // Format HCL value
+  private formatHclValue(value: unknown): string {
+    if (typeof value === 'string') return `"${value}"`;
+    if (typeof value === 'boolean' || typeof value === 'number') return String(value);
+    return JSON.stringify(value);
+  }
+
   // Manual Terraform generation as fallback
   private generateManually(config: TerraformConfig): string {
     const { provider, region, resources } = config;
 
     let tf = `# Generated Terraform Configuration
-              # Provider: ${provider}
-              # Region: ${region}
+# Provider: ${provider}
+# Region: ${region}
 
-              terraform {
-                required_version = ">= 1.0"
-                required_providers {
-                  ${provider} = {
-                    source  = "hashicorp/${provider}"
-                    version = "~> 5.0"
-                  }
-                }
-              }
+terraform {
+required_version = ">= 1.0"
+required_providers {
+    ${provider} = {
+    source  = "hashicorp/${provider}"
+    version = "~> 5.0"
+    }
+}
+}
 
-              provider "${provider}" {
-                region = "${region}"
-              }`;
+provider "${provider}" {
+region = "${region}"
+}`;
 
     // Generate resources
     resources.forEach((resource) => {
       tf += `
-            resource "${provider}_${resource.type}" "${resource.name}" {
-            ${Object.entries(resource.config)
-              .map(([key, value]) => `  ${key} = ${JSON.stringify(value)}`)
-              .join('\n')}
-            }
-        `;
+resource "${provider}_${resource.type}" "${resource.name}" {
+${Object.entries(resource.config)
+  .map(([key, value]) => `  ${key} = ${this.formatHclValue(value)}`)
+  .join('\n')}
+}
+`;
     });
 
     return tf;
@@ -155,6 +162,9 @@ export class TerraformGenerator {
     engine: string;
     instanceClass: string;
     region: string;
+    username: string;
+    password: string;
+    skipFinalSnapshot?: boolean;
   }): Promise<string> {
     const terraformConfig: TerraformConfig = {
       provider: 'aws',
@@ -167,6 +177,9 @@ export class TerraformGenerator {
             engine: config.engine,
             instance_class: config.instanceClass,
             allocated_storage: 20,
+            username: config.username,
+            password: config.password,
+            skip_final_snapshot: config.skipFinalSnapshot ?? true,
           },
         },
       ],
