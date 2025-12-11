@@ -1,9 +1,9 @@
 {
-  "name": "@cloudops-commander/cline-automation",
+  "name": "@cloudops-commander/kestra-workflows",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -18,7 +18,7 @@
     "@cloudops-commander/types": "workspace:*"
   },
   "dependencies": {
-    "execa": "^9.6.1",
+    "axios": "^1.13.2",
     "yaml": "^2.8.2",
     "zod": "^4.1.13",
     "@cloudops-commander/logger": "workspace:*"
