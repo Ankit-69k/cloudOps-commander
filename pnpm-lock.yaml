@@ -85,9 +85,6 @@ importers:
       '@cloudops-commander/logger':
         specifier: workspace:*
         version: link:../logger
-      '@cloudops-commander/types':
-        specifier: workspace:*
-        version: link:../types
       execa:
         specifier: ^9.6.1
         version: 9.6.1
@@ -98,6 +95,9 @@ importers:
         specifier: ^4.1.13
         version: 4.1.13
     devDependencies:
+      '@cloudops-commander/types':
+        specifier: workspace:*
+        version: link:../types
       '@types/node':
         specifier: ^25.0.0
         version: 25.0.0
@@ -135,9 +135,6 @@ importers:
       '@cloudops-commander/logger':
         specifier: workspace:*
         version: link:../logger
-      '@cloudops-commander/types':
-        specifier: workspace:*
-        version: link:../types
       axios:
         specifier: ^1.13.2
         version: 1.13.2
@@ -148,6 +145,9 @@ importers:
         specifier: ^4.1.13
         version: 4.1.13
     devDependencies:
+      '@cloudops-commander/types':
+        specifier: workspace:*
+        version: link:../types
       '@types/node':
         specifier: ^25.0.0
         version: 25.0.0
