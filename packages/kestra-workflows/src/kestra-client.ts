@@ -10,7 +10,7 @@ export class KestraClient {
   constructor(baseUrl: string = 'http://localhost:8080') {
     this.baseUrl = baseUrl;
     this.client = axios.create({
-      baseURL: `${baseUrl}/api/v1`,
+      baseURL: `${this.baseUrl}/api/v1`,
       headers: {
         'Content-Type': 'application/json',
       },

@@ -197,7 +197,7 @@ Provide:
     // Mock implementation - replace with actual API call
     // In production: call OpenAI, Claude, or other LLM API
 
-    logger.debug('Calling LLM API (mock)');
+    logger.debug({ prompt }, 'Calling LLM API (mock)');
 
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -238,6 +238,7 @@ Provide:
 
   // Parse decision response
   private parseDecisionResponse(response: string, options: string[]): any {
+    logger.debug({ response }, 'Parsing decision response');
     // Simplified parser - in production, use more robust parsing
     return {
       decision: options[0],
@@ -248,6 +249,7 @@ Provide:
 
   // Parse incident response
   private parseIncidentResponse(response: string): any {
+    logger.debug({ response }, 'Parsing incident response');
     return {
       rootCause: 'Root cause identified by AI',
       remediation: ['Step 1', 'Step 2'],
@@ -259,6 +261,7 @@ Provide:
 
   // Parse scaling response
   private parseScalingResponse(response: string): any {
+    logger.debug({ response }, 'Parsing scaling response');
     return {
       shouldScale: true,
       direction: 'up' as const,
