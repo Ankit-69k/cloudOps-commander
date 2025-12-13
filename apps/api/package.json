@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js",
     "clean": "rm -rf dist"
@@ -18,15 +18,17 @@
     "@types/node": "^24.10.1",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "5.9.2"
   },
   "dependencies": {
+    "@cloudops-commander/cline-automation": "workspace:*",
+    "@cloudops-commander/database": "workspace:*",
+    "@cloudops-commander/logger": "workspace:*",
+    "@cloudops-commander/types": "workspace:*",
     "@fastify/cors": "^11.2.0",
     "@fastify/websocket": "^11.2.0",
     "@types/express": "^5.0.6",
-    "@cloudops-commander/types": "workspace:*",
-    "@cloudops-commander/database": "workspace:*",
-    "@cloudops-commander/logger": "workspace:*",
     "bullmq": "^5.66.0",
     "dotenv": "^16.6.1",
     "express": "^5.2.1",

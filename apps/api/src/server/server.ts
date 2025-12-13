@@ -1,14 +1,21 @@
-import express from 'express';
-import type { Express } from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
+import Fastify from 'fastify';
 
-const app: Express = express();
+import { registerRoutes } from '../routes';
 
-app.get('/', (_, res) => {
-  res.json({
-    message: 'hello world',
-  });
+const app = Fastify({
+  logger: true,
 });
+
+// Root route
+app.get('/', async () => {
+  return { message: 'hello world' };
+});
+
+async function setup() {
+  // Register routes here
+  await registerRoutes(app);
+}
+
+setup();
 
 export default app;

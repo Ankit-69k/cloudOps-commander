@@ -17,11 +17,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
-    "paths": {
-      "@cloudops-commander/*": ["packages/*/src"]
-    }
+    "noFallthroughCasesInSwitch": true
+    // "baseUrl": "./",
+    // "paths": {
+    //   "@cloudops-commander/*": ["packages/*/src"],
+    //   "@cloudops-commander/logger": ["packages/logger"],
+    //   "@cloudops-commander/types": ["packages/types"],
+    //   "@cloudops-commander/database": ["packages/database"],
+    //   "@cloudops-commander/cline-automation": ["packages/cline-automation"],
+    //   "@cloudops-commander/kestra-workflows": ["packages/kestra-workflows"]
+    // }
   },
   "exclude": ["node_modules", "dist", "build"]
 }
