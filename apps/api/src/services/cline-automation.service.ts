@@ -166,7 +166,7 @@ export class ClineAutomationService {
   private async saveArtifact(resourceId: string, filename: string, content: string) {
     // In production, save to S3, GCS, or local file system
     // For now, we'll just log it
-    logger.info({ resourceId, filename }, 'Artifact generated');
+    logger.info({ resourceId, filename, content }, 'Artifact generated');
 
     // You can implement actual file saving here:
     // import fs from 'fs/promises';

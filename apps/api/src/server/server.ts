@@ -1,6 +1,4 @@
 import Fastify from 'fastify';
-import dotenv from 'dotenv';
-dotenv.config();
 
 import { registerRoutes } from '../routes';
 
