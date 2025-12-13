@@ -7,6 +7,5 @@
     "declarationMap": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "references": [{ "path": "../logger" }]
+  "exclude": ["node_modules", "dist"]
 }
