@@ -26,7 +26,8 @@ export class ClineClient {
 
     try {
       // Create working directory for this task
-      const taskDir = path.join(this.workDir, task.id);
+      const sanitizedId = task.id.replace(/[^a-zA-Z0-9_-]/g, '_');
+      const taskDir = path.join(this.workDir, sanitizedId);
       await fs.mkdir(taskDir, { recursive: true });
 
       // Build the prompt/message for Cline
@@ -369,7 +370,7 @@ Do not ask for approval - just create the file.`;
 
   async validateCli(): Promise<boolean> {
     try {
-      const result = await execa(this.cliPath, ['--version'], { timeout: 5000 });
+      const result = await execa(this.cliPath, ['version'], { timeout: 5000 });
       logger.info({ version: result.stdout }, 'Cline CLI validated');
       return true;
     } catch (error) {
@@ -386,9 +387,20 @@ Do not ask for approval - just create the file.`;
       for (const entry of entries) {
         if (entry.isDirectory()) {
           const dirPath = path.join(this.workDir, entry.name);
-          const stats = await fs.stat(dirPath);
 
-          if (now - stats.mtimeMs > maxAge) {
+          // Check for a marker file to get creation time
+          const markerPath = path.join(dirPath, '.created');
+          let createdTime;
+          try {
+            const markerStats = await fs.stat(markerPath);
+            createdTime = markerStats.mtimeMs;
+          } catch {
+            // Fallback to directory stats if no marker
+            const stats = await fs.stat(dirPath);
+            createdTime = stats.mtimeMs;
+          }
+
+          if (now - createdTime > maxAge) {
             await fs.rm(dirPath, { recursive: true, force: true });
             logger.info({ dir: entry.name }, 'Cleaned up old task directory');
           }

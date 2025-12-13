@@ -17,7 +17,7 @@ const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', 
 
 export class ClineAutomationService {
   private queue: Queue;
-  private worker: Worker;
+  private worker!: Worker;
   private client: ClineClient;
   private tfGenerator: TerraformGenerator;
   private k8sGenerator: KubernetesGenerator;
@@ -36,7 +36,6 @@ export class ClineAutomationService {
     fs.mkdir(this.artifactsDir, { recursive: true }).catch(() => {});
 
     this.queue = new Queue('cline-automation', { connection });
-    this.worker = new Worker('cline-automation', this.processJob.bind(this), { connection });
 
     this.initWorker();
 
@@ -227,6 +226,8 @@ export class ClineAutomationService {
     if (job) {
       await job.remove();
       logger.info({ jobId }, 'Job cancelled');
+      return true;
     }
+    return false;
   }
 }

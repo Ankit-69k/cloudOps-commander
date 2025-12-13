@@ -19,8 +19,11 @@ export class AutomationHandler {
     reply: FastifyReply
   ) {
     const { resourceId } = request.params;
-    const body = TerraformJobSchema.parse(request.body);
-
+    const parsed = TerraformJobSchema.safeParse(request.body);
+    if (!parsed.success) {
+      return reply.code(400).send({ error: 'Validation failed', details: parsed.error.flatten() });
+    }
+    const body = parsed.data;
     const job = await this.automationService.createTerraformJob(resourceId, body);
 
     return reply.send({
@@ -76,7 +79,10 @@ export class AutomationHandler {
   async cancelJob(request: FastifyRequest<{ Params: { jobId: string } }>, reply: FastifyReply) {
     const { jobId } = request.params;
 
-    await this.automationService.cancelJob(jobId);
+    const cancelled = await this.automationService.cancelJob(jobId);
+    if (!cancelled) {
+      return reply.code(404).send({ error: 'Job not found' });
+    }
 
     return reply.send({ message: 'Job cancelled successfully' });
   }
