@@ -1,17 +1,20 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { initializeApp } from './server/server';
+import app from './server/server';
 
-export default initializeApp;
+export default app;
 
 if (process.env.NODE_ENV !== 'production') {
   const port = Number(process.env.PORT) || 8080;
 
-  initializeApp()
-    .then((app) => app.listen({ port: port }))
+  app
+    .listen({ port, host: '0.0.0.0' })
+    .then(() => {
+      console.log(`Server is running on http://localhost:${port}`);
+    })
     .catch((err) => {
-      console.error(err);
+      app.log.error(err);
       process.exit(1);
     });
 }

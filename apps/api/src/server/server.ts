@@ -13,7 +13,11 @@ app.get('/', async () => {
   return { message: 'hello world' };
 });
 
-export async function initializeApp() {
+async function setup() {
+  // Register routes here
   await registerRoutes(app);
-  return app;
 }
+
+setup();
+
+export default app;
