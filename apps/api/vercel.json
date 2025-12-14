@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "cd ../.. && pnpm install && pnpm build --filter=api",
-  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "outputDirectory": "dist",
   "builds": [
     {
       "src": "src/index.ts",
@@ -14,5 +11,8 @@
       "src": "/(.*)",
       "dest": "src/index.ts"
     }
-  ]
+  ],
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist"
 }

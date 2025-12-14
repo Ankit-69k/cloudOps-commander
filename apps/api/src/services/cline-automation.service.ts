@@ -1,4 +1,4 @@
-// import { // logger } from '@cloudops-commander/// logger';
+import { logger } from '@cloudops-commander/logger';
 import { Queue, Worker, Job } from 'bullmq';
 import Redis from 'ioredis';
 import {
@@ -39,14 +39,14 @@ export class ClineAutomationService {
 
     this.initWorker();
 
-    // logger.info('Cline Automation Service initialized');
+    logger.info('Cline Automation Service initialized');
   }
 
   private initWorker() {
     this.worker = new Worker(
       'cline-automation',
       async (job: Job) => {
-        // logger.info({ jobId: job.id, data: job.data }, 'Processing Cline automation job');
+        logger.info({ jobId: job.id, data: job.data }, 'Processing Cline automation job');
 
         try {
           const result = await this.processJob(job);
@@ -71,7 +71,7 @@ export class ClineAutomationService {
 
           return result;
         } catch (error: any) {
-          // logger.error({ error: error.message, jobId: job.id }, 'Cline automation failed');
+          logger.error({ error: error.message, jobId: job.id }, 'Cline automation failed');
           throw error;
         }
       },
@@ -79,13 +79,11 @@ export class ClineAutomationService {
     );
 
     this.worker.on('completed', (job) => {
-      // logger.info({ jobId: job.id }, 'Cline automation completed');
-      console.log(job);
+      logger.info({ jobId: job.id }, 'Cline automation completed');
     });
 
     this.worker.on('failed', (job, err) => {
-      // logger.error({ jobId: job?.id, error: err.message }, 'Cline automation failed');
-      console.log({ jobId: job?.id, error: err.message });
+      logger.error({ jobId: job?.id, error: err.message }, 'Cline automation failed');
     });
   }
 
@@ -105,7 +103,7 @@ export class ClineAutomationService {
   }
 
   async provisionTerraform(resourceId: string, config: any) {
-    // logger.info({ resourceId }, 'Provisioning infrastructure with Terraform');
+    logger.info({ resourceId }, 'Provisioning infrastructure with Terraform');
 
     const terraform = await this.tfGenerator.generate({
       provider: config.provider || 'aws',
@@ -124,7 +122,7 @@ export class ClineAutomationService {
   }
 
   async provisionKubernetes(resourceId: string, config: any) {
-    // logger.info({ resourceId }, 'Generating Kubernetes manifests');
+    logger.info({ resourceId }, 'Generating Kubernetes manifests');
 
     const { deployment, service, ingress } = await this.k8sGenerator.generateFullStack({
       name: config.name || 'app',
@@ -148,7 +146,7 @@ export class ClineAutomationService {
   }
 
   async generateDocker(resourceId: string, config: any) {
-    // logger.info({ resourceId }, 'Generating Dockerfile');
+    logger.info({ resourceId }, 'Generating Dockerfile');
 
     const dockerfile = await this.dockerGenerator.generateNodejs({
       nodeVersion: config.nodeVersion || '20',
@@ -168,13 +166,13 @@ export class ClineAutomationService {
   private async saveArtifact(resourceId: string, filename: string, content: string) {
     // In production, save to S3, GCS, or local file system
     // For now, we'll just log it
-    // logger.info({ resourceId, filename, content }, 'Artifact generated');
+    logger.info({ resourceId, filename, content }, 'Artifact generated');
+
     // You can implement actual file saving here:
     // import fs from 'fs/promises';
     // const path = `./artifacts/${resourceId}/${filename}`;
     // await fs.mkdir(`./artifacts/${resourceId}`, { recursive: true });
     // await fs.writeFile(path, content);
-    console.log({ resourceId, filename, content });
   }
 
   // Public API methods
@@ -227,7 +225,7 @@ export class ClineAutomationService {
 
     if (job) {
       await job.remove();
-      // logger.info({ jobId }, 'Job cancelled');
+      logger.info({ jobId }, 'Job cancelled');
       return true;
     }
     return false;
