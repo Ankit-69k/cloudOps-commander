@@ -21,11 +21,11 @@
     "baseUrl": "./",
     "paths": {
       "@cloudops-commander/*": ["packages/*/src"],
-      "@cloudops-commander/logger": ["packages/logger"],
-      "@cloudops-commander/types": ["packages/types"],
-      "@cloudops-commander/database": ["packages/database"],
-      "@cloudops-commander/cline-automation": ["packages/cline-automation"],
-      "@cloudops-commander/kestra-workflows": ["packages/kestra-workflows"]
+      "@cloudops-commander/logger": ["packages/logger/src"],
+      "@cloudops-commander/types": ["packages/types/src"],
+      "@cloudops-commander/database": ["packages/database/src"],
+      "@cloudops-commander/cline-automation": ["packages/cline-automation/src"],
+      "@cloudops-commander/kestra-workflows": ["packages/kestra-workflows/src"]
     }
   },
   "exclude": ["node_modules", "dist", "build"]
