@@ -53,13 +53,10 @@ cloudops-commander/
 │   ├── frontend/          # Next.js dashboard (deployed to Vercel)
 │   └── api/               # Backend API + orchestration layer
 ├── packages/
-│   ├── ui/                # Shared UI components
-│   ├── config/            # Shared TypeScript config, ESLint, etc.
-│   └── utils/             # Shared utilities & types
-├── infra/
 │   ├── cline-automation/  # Cline CLI tools and presets for IaC generation
-│   ├── terraform/         # Base Terraform modules and environments
-│   ├── k8s/               # Kubernetes manifests & Helm charts
-│   └── kestra/            # Kestra workflows for incidents & remediation
+│   ├── kestra/            # Kestra workflows for observability and auto-remediation
+│   ├── logger/            # Logging utilities
+│   └── database/          # Database schema and Prisma client
+│   └── types/             # Shared TypeScript types
 └── README.md
 ```
